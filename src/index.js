@@ -21,7 +21,7 @@ export const school = {
     7: new Student('Ivan', [76, 89, 78, 98, 98, 99, 89, 96]),
   },
 
-  Property(gradeType, minGrade, maxGrade) {
+  initGetter(gradeType, minGrade, maxGrade) {
     Object.defineProperty(this, gradeType, {
       get() {
         const studentArr = Object.values(school.students);
@@ -40,9 +40,13 @@ export const school = {
       },
     });
   },
+
+  init() {
+    this.initGetter('aGradeStudents', 90, 100);
+    this.initGetter('bGradeStudents', 75, 89);
+    this.initGetter('cGradeStudents', 60, 75);
+    this.initGetter('dGradeStudents', 0, 59);
+  },
 };
 
-school.Property('aGradeStudents', 90, 100);
-school.Property('bGradeStudents', 75, 89);
-school.Property('cGradeStudents', 60, 75);
-school.Property('dGradeStudents', 0, 59);
+school.init();
