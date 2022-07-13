@@ -20,75 +20,29 @@ export const school = {
     6: new Student('Eugene', [97, 34, 78, 85, 98, 65]),
     7: new Student('Ivan', [76, 89, 78, 98, 98, 99, 89, 96]),
   },
+
+  Property(gradeType, minGrade, maxGrade) {
+    Object.defineProperty(this, gradeType, {
+      get() {
+        const studentArr = Object.values(school.students);
+
+        let gradeFilter = studentArr.filter(function (item) {
+          if (item.averageGrade <= maxGrade && item.averageGrade >= minGrade) {
+            return item;
+          }
+        });
+
+        let gradeNames = gradeFilter.map(function (item) {
+          return item.name;
+        });
+
+        return gradeNames.join(', ');
+      },
+    });
+  },
 };
 
-const studentArr = Object.values(school.students);
-const getAverage = (numbers) => {
-  const sum = numbers.reduce((acc, number) => acc + number, 0);
-  const length = numbers.length;
-  return Math.round(sum / length);
-};
-
-Object.defineProperty(school, 'aGradeStudents', {
-  get() {
-    let gradeFilter = studentArr.filter(function (item) {
-      if (getAverage(item.grades) <= 100 && getAverage(item.grades) >= 90) {
-        return item;
-      }
-    });
-
-    let gradeNames = gradeFilter.map(function (item) {
-      return item.name;
-    });
-
-    return gradeNames.join(', ');
-  },
-});
-
-Object.defineProperty(school, 'bGradeStudents', {
-  get() {
-    let gradeFilter = studentArr.filter(function (item) {
-      if (getAverage(item.grades) <= 89 && getAverage(item.grades) >= 75) {
-        return item;
-      }
-    });
-
-    let gradeNames = gradeFilter.map(function (item) {
-      return item.name;
-    });
-
-    return gradeNames.join(', ');
-  },
-});
-
-Object.defineProperty(school, 'cGradeStudents', {
-  get() {
-    let gradeFilter = studentArr.filter(function (item) {
-      if (getAverage(item.grades) <= 75 && getAverage(item.grades) >= 60) {
-        return item;
-      }
-    });
-
-    let gradeNames = gradeFilter.map(function (item) {
-      return item.name;
-    });
-
-    return gradeNames.join(', ');
-  },
-});
-
-Object.defineProperty(school, 'dGradeStudents', {
-  get() {
-    let gradeFilter = studentArr.filter(function (item) {
-      if (getAverage(item.grades) <= 59 && getAverage(item.grades) >= 0) {
-        return item;
-      }
-    });
-
-    let gradeNames = gradeFilter.map(function (item) {
-      return item.name;
-    });
-
-    return gradeNames.join(', ');
-  },
-});
+school.Property('aGradeStudents', 90, 100);
+school.Property('bGradeStudents', 75, 89);
+school.Property('cGradeStudents', 60, 75);
+school.Property('dGradeStudents', 0, 59);
